@@ -18,10 +18,11 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Verify secrets
-      run:
-      echo USERNAME: ${{ secrets.USERNAME }}
-      echo PASSWORD: ${{ secrets.PASSWORD }}
+    - name: Verify secrets (for debugging purposes)
+      run: |
+      echo "USERNAME: ${USERNAME}"
+      echo "PASSWORD: ${PASSWORD}"
+      # REMOVE this step after verification to avoid exposing secrets in logs.
       env:
         USERNAME: ${{ secrets.USERNAME }}
         PASSWORD: ${{ secrets.PASSWORD }}
