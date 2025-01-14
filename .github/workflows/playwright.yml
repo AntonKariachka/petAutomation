@@ -47,21 +47,21 @@ jobs:
       - name: Deploy to GitHub Pages
         if: always()
         run: |
-        # Configure git
+          # Configure git
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           
-        # Check out the gh-pages branch
+          # Check out the gh-pages branch
           git fetch origin
           git checkout gh-pages || git checkout --orphan gh-pages
 
-        # Remove existing contents
+          # Remove existing contents
           rm -rf *
 
-        # Copy the report to the root
+          # Copy the report to the root
           cp -r playwright-report/* .
 
-        # Push the changes
+          # Push the changes
           git add .
           git commit -m "Update Playwright report"
           git push origin gh-pages --force
