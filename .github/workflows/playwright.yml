@@ -36,6 +36,9 @@ jobs:
           USEREMAIL: ${{ secrets.USEREMAIL }}
           PASSWORD: ${{ secrets.PASSWORD }}
 
+      - name: List report directory for diagnostics
+        run: ls -l playwright-report/
+
       - name: Upload test report as artifact
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
