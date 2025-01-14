@@ -39,14 +39,6 @@ jobs:
       - name: List report directory for diagnostics
         run: ls -l playwright-report/
 
-      - name: Upload test report as artifact
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
-
       - name: Deploy to GitHub Pages
         if: always()
         run: |
@@ -54,19 +46,22 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           
-          # Check out the gh-pages branch
-          git fetch origin
-          git checkout gh-pages || git checkout --orphan gh-pages
-
-          # Remove existing contents
-          rm -rf *
-
+          # Initialize and switch to gh-pages branch
+          git checkout --orphan gh-pages
+          
+          # Remove all files
+          git rm -rf .
+          
           # Copy the report to the root
           cp -r playwright-report/* .
-
-          # Push the changes
+          
+          # Add all files
           git add .
+          
+          # Commit changes
           git commit -m "Update Playwright report"
+          
+          # Push changes to the gh-pages branch
           git push origin gh-pages --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
