@@ -38,10 +38,23 @@ jobs:
       - name: Prepare and deploy report to GitHub Pages
         if: always()
         run: |
-          mkdir -p public
-          cp -r playwright-report/* public/
-          - name: Deploy to Github Pages
-            uses: peaceiris/actions-gh-pages@v3
-            with:
-              github_token: ${{ secrets.GITHUB_TOKEN }}
-              publish_dir: ./public
+        # Configure git
+         git config --global user.name "${{ github.actor }}"
+         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          
+        # Check out the gh-pages branch
+         git fetch origin
+         git checkout gh-pages || git checkout --orphan gh-pages
+          
+        # Remove existing contents
+         rm -rf *
+          
+        # Copy the report to the root
+         cp -r playwright-report/* .
+          
+        # Push the changes
+         git add .
+         git commit -m "Update Playwright report"
+         git push origin gh-pages --force
+        env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
