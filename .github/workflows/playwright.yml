@@ -24,14 +24,14 @@ jobs:
        USERNAME: ${{ secrets.USEREMAIL }}
        PASSWORD: ${{ secrets.PASSWORD }}
       run: |
-       echo "USERNAME: $USEREMAIL"
+       echo "USEREMAIL: $USEREMAIL"
        echo "PASSWORD: $PASSWORD"
       # REMOVE this step after verification to avoid exposing secrets in logs.
 
     - name: Run Playwright tests
       run: npx playwright test
       env:
-        USERNAME: ${{ secrets.USEREMAIL }}
+        USEREMAIL: ${{ secrets.USEREMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
