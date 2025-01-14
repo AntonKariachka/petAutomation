@@ -35,9 +35,7 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-      - name: Generate Playwright Report
-        run: npx playwright show-report
-      - name: Deploy Report to GitHub Pages
+      - name: Prepare and deploy report to GitHub Pages
         if: always()
         run: |
           mkdir -p public
