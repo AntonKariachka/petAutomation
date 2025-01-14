@@ -21,10 +21,10 @@ jobs:
 
     - name: Verify secrets (for debugging purposes)
       env:
-       USERNAME: ${{ secrets.USERNAME }}
+       USERNAME: ${{ secrets.USEREMAIL }}
        PASSWORD: ${{ secrets.PASSWORD }}
       run: |
-       echo "USERNAME: $USERNAME"
+       echo "USERNAME: $USEREMAIL"
        echo "PASSWORD: $PASSWORD"
       # REMOVE this step after verification to avoid exposing secrets in logs.
 
