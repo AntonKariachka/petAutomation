@@ -29,10 +29,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run ESLint
-        run: npx eslint pages/ tests/
-        env:
-          USEREMAIL: ${{ secrets.USEREMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+        run: npx eslint pages/ tests/ --fix
 
       - name: Run Playwright tests
         run: npx playwright test --reporter=html
