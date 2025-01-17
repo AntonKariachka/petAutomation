@@ -28,6 +28,12 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Run ESLint
+        run: npx eslint pages/ tests/
+        env:
+          USEREMAIL: ${{ secrets.USEREMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+
       - name: Run Playwright tests
         run: npx playwright test --reporter=html
         env:
@@ -40,26 +46,13 @@ jobs:
       - name: Deploy to GitHub Pages
         if: always()
         run: |
-          # Configure git
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          
-          # Initialize and switch to gh-pages branch
           git checkout --orphan gh-pages
-          
-          # Remove all files
           git rm -rf .
-          
-          # Copy the report to the root
           cp -r playwright-report/* .
-          
-          # Add all files
           git add .
-          
-          # Commit changes
           git commit -m "Update Playwright report"
-          
-          # Push changes to the gh-pages branch
           git push origin gh-pages --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
