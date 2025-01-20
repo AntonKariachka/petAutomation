@@ -29,7 +29,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run ESLint
-        run: npx eslint pages/ tests/ --fix
+        run: npx eslint pages/ tests/ api/ --fix
 
       - name: Run Playwright tests
         run: npx playwright test --reporter=html
